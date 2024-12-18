@@ -8,6 +8,7 @@
     "target": "es2020",
     "allowJs": true,
     "moduleResolution": "node",
+    "lib": ["es2022", "dom"],
     "resolveJsonModule": true,
     "declaration": true,
     "declarationMap": true,

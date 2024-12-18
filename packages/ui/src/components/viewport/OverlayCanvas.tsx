@@ -8,6 +8,8 @@ import styles from './Viewport.module.scss';
 
 interface OverlayCanvasProps extends JSX.HTMLAttributes<HTMLCanvasElement> {
   drawHooks: (() => PluginDrawFunction)[];
+  width?: number;
+  height?: number;
 }
 
 export function OverlayCanvas({

@@ -1,7 +1,10 @@
 import type {JSX} from 'preact';
 import styles from './Controls.module.scss';
 
-type InputProps = JSX.HTMLAttributes<HTMLInputElement>;
+export interface InputProps extends JSX.HTMLAttributes<HTMLInputElement> {
+  value?: string | number;
+  readOnly?: boolean;
+}
 
 export function Input({onChange, onChangeCapture, ...props}: InputProps) {
   return (

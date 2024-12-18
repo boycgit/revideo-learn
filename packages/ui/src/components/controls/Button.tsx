@@ -3,9 +3,12 @@ import type {JSX} from 'preact';
 import styles from './Controls.module.scss';
 
 export interface ButtonProps
-  extends Omit<JSX.HTMLAttributes<HTMLButtonElement>, 'loading'> {
+  extends Omit<JSX.HTMLAttributes<HTMLButtonElement>, 'loading' | 'type'> {
   main?: boolean;
   loading?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  value?: string;
 }
 
 export function Button({main, loading, className, ...props}: ButtonProps) {

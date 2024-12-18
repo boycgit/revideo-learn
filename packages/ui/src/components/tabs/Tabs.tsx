@@ -52,6 +52,8 @@ export function Tab({className, tab, forwardRef, ...props}: TabProps) {
 export interface TabLinkProps extends JSX.HTMLAttributes<HTMLAnchorElement> {
   children: ComponentChildren;
   disabled?: boolean;
+  href?: string;
+  target?: string;
 }
 
 export function TabLink({className, href, disabled, ...props}: TabLinkProps) {

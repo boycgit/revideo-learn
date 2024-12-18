@@ -28,10 +28,12 @@
   "dependencies": {
     "@preact/signals": "^1.2.1",
     "@revideo/core": "0.10.3",
+    "@types/react": "^18",
     "preact": "^10.19.2"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.5.0",
+    "@types/node": "^22.10.2",
     "clsx": "^2.0.0",
     "highlight.js": "^11.9.0",
     "sass": "^1.69.5",

@@ -4,9 +4,6 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "core:dev": "npm run dev -w packages/core",
     "core:build": "npm run build -w packages/core",

@@ -6,6 +6,7 @@
   "ignoreChanges": ["**/*.test.ts", "**/*.md"],
   "message": "ci(release): %v [skip ci]",
   "conventionalCommits": true,
+  "npmClient": "pnpm",
   "command": {
     "version": {
       "changelog": false

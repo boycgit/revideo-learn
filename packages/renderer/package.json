@@ -21,11 +21,14 @@
   ],
   "dependencies": {
     "@revideo/ffmpeg": "0.10.3",
+    "@revideo/telemetry": "0.10.3",
     "puppeteer": "^23.4.0",
+    "uuid": "^11.0.3",
     "vite": "4.5.2"
   },
   "devDependencies": {
     "@revideo/core": "0.10.3",
+    "@revideo/vite-plugin": "^0.10.3",
     "ncp": "^2.0.0"
   }
 }

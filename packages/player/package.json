@@ -23,6 +23,7 @@
   ],
   "devDependencies": {
     "@revideo/core": "0.10.3",
+    "@types/node": "^22.10.2",
     "sass": "^1.58.0",
     "terser": "^5.16.1"
   }

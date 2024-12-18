@@ -3,7 +3,7 @@ import {Color, Vector2} from '@revideo/core';
 import type {CanvasStyle, PossibleCanvasStyle} from '../partials';
 import {Gradient, Pattern} from '../partials';
 
-export function canvasStyleParser(style: PossibleCanvasStyle) {
+export function canvasStyleParser(style: PossibleCanvasStyle): Color | Gradient | Pattern | null {
   if (style === null) {
     return null;
   }
