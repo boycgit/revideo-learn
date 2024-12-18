@@ -63,8 +63,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.1
       '@revideo/core':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@rive-app/canvas-advanced':
         specifier: 2.7.3
         version: 2.7.3
@@ -87,9 +87,15 @@ importers:
       '@preact/signals':
         specifier: ^1.2.1
         version: 1.3.1(preact@10.25.2)
+      '@revideo/2d':
+        specifier: workspace:*
+        version: 'link:'
       '@revideo/ui':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ui
+      '@rollup/plugin-commonjs':
+        specifier: ^28.0.2
+        version: 28.0.2(rollup@3.29.5)
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.4
         version: 15.3.1(rollup@3.29.5)
@@ -115,14 +121,14 @@ importers:
   packages/cli:
     dependencies:
       '@revideo/renderer':
-        specifier: 0.10.3
-        version: 0.10.3(@types/node@22.10.2)(sass@1.83.0)(terser@5.37.0)(typescript@5.7.2)
+        specifier: workspace:*
+        version: link:../renderer
       '@revideo/telemetry':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../telemetry
       '@revideo/vite-plugin':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../vite-plugin
       axios:
         specifier: ^1.7.9
         version: 1.7.9
@@ -174,8 +180,8 @@ importers:
   packages/create:
     dependencies:
       '@revideo/telemetry':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../telemetry
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -184,35 +190,35 @@ importers:
         version: 2.4.2
     devDependencies:
       '@revideo/2d':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../2d
       '@revideo/core':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@revideo/ffmpeg':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ffmpeg
       '@revideo/renderer':
-        specifier: 0.10.3
-        version: 0.10.3(@types/node@22.10.2)(sass@1.83.0)(terser@5.37.0)(typescript@5.7.2)
+        specifier: workspace:*
+        version: link:../renderer
       '@revideo/ui':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ui
       '@revideo/vite-plugin':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../vite-plugin
 
   packages/e2e:
     dependencies:
       '@revideo/2d':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../2d
       '@revideo/core':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@revideo/ffmpeg':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ffmpeg
       jest-image-snapshot:
         specifier: ^6.2.0
         version: 6.4.0
@@ -221,30 +227,30 @@ importers:
         version: 23.10.4(typescript@5.7.2)
     devDependencies:
       '@revideo/ui':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ui
       '@revideo/vite-plugin':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../vite-plugin
 
   packages/examples:
     dependencies:
       '@revideo/2d':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../2d
       '@revideo/core':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@revideo/ffmpeg':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ffmpeg
     devDependencies:
       '@revideo/ui':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ui
       '@revideo/vite-plugin':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../vite-plugin
 
   packages/ffmpeg:
     dependencies:
@@ -255,11 +261,11 @@ importers:
         specifier: ^2.0.0
         version: 2.1.2
       '@revideo/core':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@revideo/telemetry':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../telemetry
       fluent-ffmpeg:
         specifier: ^2.1.2
         version: 2.1.3
@@ -280,8 +286,8 @@ importers:
   packages/player:
     devDependencies:
       '@revideo/core':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@types/node':
         specifier: ^22.10.2
         version: 22.10.2
@@ -295,8 +301,8 @@ importers:
   packages/player-react:
     dependencies:
       '@revideo/core':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       react:
         specifier: ^18
         version: 18.3.1
@@ -335,11 +341,11 @@ importers:
   packages/renderer:
     dependencies:
       '@revideo/ffmpeg':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ffmpeg
       '@revideo/telemetry':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../telemetry
       puppeteer:
         specifier: ^23.4.0
         version: 23.10.4(typescript@5.7.2)
@@ -351,11 +357,11 @@ importers:
         version: 4.5.2(@types/node@22.10.2)(sass@1.83.0)(terser@5.37.0)
     devDependencies:
       '@revideo/core':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@revideo/vite-plugin':
-        specifier: ^0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../vite-plugin
       ncp:
         specifier: ^2.0.0
         version: 2.0.0
@@ -372,24 +378,24 @@ importers:
   packages/template:
     dependencies:
       '@revideo/2d':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../2d
       '@revideo/core':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@revideo/ffmpeg':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ffmpeg
       '@revideo/renderer':
-        specifier: '*'
-        version: 0.10.3(@types/node@22.10.2)(sass@1.83.0)(terser@5.37.0)(typescript@5.7.2)
+        specifier: workspace:*
+        version: link:../renderer
     devDependencies:
       '@revideo/ui':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ui
       '@revideo/vite-plugin':
-        specifier: '*'
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../vite-plugin
 
   packages/ui:
     dependencies:
@@ -397,8 +403,8 @@ importers:
         specifier: ^1.2.1
         version: 1.3.1(preact@10.25.2)
       '@revideo/core':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../core
       '@types/react':
         specifier: ^18
         version: 18.3.17
@@ -431,8 +437,8 @@ importers:
   packages/vite-plugin:
     dependencies:
       '@revideo/ffmpeg':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../ffmpeg
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.2
@@ -450,8 +456,8 @@ importers:
         version: 0.6.1
     devDependencies:
       '@revideo/telemetry':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: workspace:*
+        version: link:../telemetry
       '@types/follow-redirects':
         specifier: ^1.14.1
         version: 1.14.4
@@ -1299,29 +1305,17 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@revideo/2d@0.10.3':
-    resolution: {integrity: sha512-zcDNzvID3qzBznvDWwJ+KIemjP3gPnqTSM5xtObTMIZ3s0e0PavQ08JZlXk1BIsIXR6o6bKMFbvwIPB7mgC7gw==}
-
-  '@revideo/core@0.10.3':
-    resolution: {integrity: sha512-Yc/p0SO7SUR0NMq/+9G5zOAM2P2wSkaeRPUASYEeTGgzGbgm+ZWuFWZao04drWL5yJ8dcU92QmGI8ciVvn4ZuA==}
-
-  '@revideo/ffmpeg@0.10.3':
-    resolution: {integrity: sha512-Dvb3LSUQim0ztPM9N3dVEks1O0OWgDHoT+7aVrc/oLL7EW/wC6BQs7Athu+VMVw0kaZ3Pt1u3Vdh9/g1OvmmoQ==}
-
-  '@revideo/renderer@0.10.3':
-    resolution: {integrity: sha512-c7HAEWq6+WwzaTDCLjCZBqWzhEYcLXMUKON1VgAaJq+M1ZGQuc/fmRxMhodYaDLGkP7KK7/zRWwqxUU30PAefQ==}
-
-  '@revideo/telemetry@0.10.3':
-    resolution: {integrity: sha512-7gyXYSp4tAyl1Uyu9tgEpbLxF8KmN9JyDbiBu1glDCYfjuQEyk+4UBI0wvdP1vTYcmde4jDrEPVxNrwXZ0GLOw==}
-
-  '@revideo/ui@0.10.3':
-    resolution: {integrity: sha512-+m+RGCHZmi2wVfXN2+E2RTNiqEn7iwp0r46RhZHcWDhQD9HTfbB8clQOjd+d/G4EPLqG1Yp+/YDHuDVLrlJsVg==}
-
-  '@revideo/vite-plugin@0.10.3':
-    resolution: {integrity: sha512-a4tvRHqeSjdHLhN+7sr8RfTRaNWNI819+t9KPhyKH0/k3yMUbHQDq1kDVZ4AbW76CBZ3SGir1BT8CIQKZV4Y8A==}
-
   '@rive-app/canvas-advanced@2.7.3':
     resolution: {integrity: sha512-3+zi0CiiTYVZpaBUooTgQ3p0uSBKW+g7UiORUPykt5w5Wue1zxUX/iaGVzEyrXg40KU32juHADxXi6uOhbaPcg==}
+
+  '@rollup/plugin-commonjs@28.0.2':
+    resolution: {integrity: sha512-BEFI2EDqzl+vA1rl97IDRZ61AIwGH093d9nz8+dThxJNH8oSoB7MjWvPCX3dkaK1/RCJ/1v/R1XB15FuSs0fQw==}
+    engines: {node: '>=16.0.0 || 14 >= 14.17'}
+    peerDependencies:
+      rollup: ^2.68.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
 
   '@rollup/plugin-node-resolve@15.3.1':
     resolution: {integrity: sha512-tgg6b91pAybXHJQMAAwW9VuWBO6Thi+q7BCNARLwSqlmsHz0XYURtGvh/AuwSADXSI4h/2uHbs7s4FzlZDGSGA==}
@@ -2112,6 +2106,9 @@ packages:
   common-ancestor-path@1.0.1:
     resolution: {integrity: sha512-L3sHRo1pXXEqX8VU28kfgUY+YGsk09hPqZiZmLacNib6XNTCM8ubYeT7ryXQw8asB1sKgcU5lkB7ONug08aB8w==}
 
+  commondir@1.0.1:
+    resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
+
   compare-func@2.0.0:
     resolution: {integrity: sha512-zHig5N+tPWARooBnb0Zx1MFcdfpyJrfTJ3Y5L+IFvUm8rM74hHz66z0gw0x4tijh5CorKkKUCnW82R2vmpeCRA==}
 
@@ -2707,6 +2704,14 @@ packages:
   fd-slicer@1.1.0:
     resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
 
+  fdir@6.4.2:
+    resolution: {integrity: sha512-KnhMXsKSPZlAhp7+IjUkRZKPb4fUyccpDrdFXbi4QL1qkmFh9kVY09Yox+n4MaOb3lHZ1Tv829C3oaaXoMYPDQ==}
+    peerDependencies:
+      picomatch: ^3 || ^4
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
+
   figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
     engines: {node: '>=8'}
@@ -3223,6 +3228,9 @@ packages:
 
   is-potential-custom-element-name@1.0.1:
     resolution: {integrity: sha512-bCYeRA2rVibKZd+s2625gGnGF/t7DSqDs4dP7CrLA1m7jKWz6pps0LpYLJN8Q64HtmPKJ1hrN3nzPNKFEKOUiQ==}
+
+  is-reference@1.2.1:
+    resolution: {integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==}
 
   is-ssh@1.4.0:
     resolution: {integrity: sha512-x7+VxdxOdlV3CYpjvRLBv5Lo9OJerlYanjwFrPR9fuGPjCiNiCzFgAWpiLAohSbsnH4ZAys3SBh+hq5rJosxUQ==}
@@ -6769,79 +6777,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@revideo/2d@0.10.3':
-    dependencies:
-      '@codemirror/language': 6.10.7
-      '@lezer/common': 1.2.3
-      '@lezer/highlight': 1.2.1
-      '@revideo/core': 0.10.3
-      '@rive-app/canvas-advanced': 2.7.3
-      code-fns: 0.8.2
-      hls.js: 1.5.18
-      mathjax-full: 3.2.2
-      mp4box: 0.5.3
-      parse-svg-path: 0.1.2
-
-  '@revideo/core@0.10.3':
-    dependencies:
-      chroma-js: 2.4.2
-      mp4-wasm: 1.0.6
-
-  '@revideo/ffmpeg@0.10.3':
-    dependencies:
-      '@ffmpeg-installer/ffmpeg': 1.1.0
-      '@ffprobe-installer/ffprobe': 2.1.2
-      '@revideo/core': 0.10.3
-      '@revideo/telemetry': 0.10.3
-      fluent-ffmpeg: 2.1.3
-      uuid: 10.0.0
-    transitivePeerDependencies:
-      - debug
-
-  '@revideo/renderer@0.10.3(@types/node@22.10.2)(sass@1.83.0)(terser@5.37.0)(typescript@5.7.2)':
-    dependencies:
-      '@revideo/ffmpeg': 0.10.3
-      puppeteer: 23.10.4(typescript@5.7.2)
-      vite: 4.5.2(@types/node@22.10.2)(sass@1.83.0)(terser@5.37.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - bufferutil
-      - debug
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
-      - utf-8-validate
-
-  '@revideo/telemetry@0.10.3':
-    dependencies:
-      posthog-node: 4.3.2
-      uuid: 9.0.1
-    transitivePeerDependencies:
-      - debug
-
-  '@revideo/ui@0.10.3':
-    dependencies:
-      '@preact/signals': 1.3.1(preact@10.25.2)
-      '@revideo/core': 0.10.3
-      preact: 10.25.2
-
-  '@revideo/vite-plugin@0.10.3':
-    dependencies:
-      '@revideo/ffmpeg': 0.10.3
-      fast-glob: 3.3.2
-      follow-redirects: 1.15.9
-      formidable: 3.5.2
-      mime-types: 2.1.35
-      source-map: 0.6.1
-    transitivePeerDependencies:
-      - debug
-
   '@rive-app/canvas-advanced@2.7.3': {}
+
+  '@rollup/plugin-commonjs@28.0.2(rollup@3.29.5)':
+    dependencies:
+      '@rollup/pluginutils': 5.1.4(rollup@3.29.5)
+      commondir: 1.0.1
+      estree-walker: 2.0.2
+      fdir: 6.4.2(picomatch@4.0.2)
+      is-reference: 1.2.1
+      magic-string: 0.30.17
+      picomatch: 4.0.2
+    optionalDependencies:
+      rollup: 3.29.5
 
   '@rollup/plugin-node-resolve@15.3.1(rollup@3.29.5)':
     dependencies:
@@ -7710,6 +7658,8 @@ snapshots:
 
   common-ancestor-path@1.0.1: {}
 
+  commondir@1.0.1: {}
+
   compare-func@2.0.0:
     dependencies:
       array-ify: 1.0.0
@@ -8421,6 +8371,10 @@ snapshots:
     dependencies:
       pend: 1.2.0
 
+  fdir@6.4.2(picomatch@4.0.2):
+    optionalDependencies:
+      picomatch: 4.0.2
+
   figures@3.2.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -8941,6 +8895,10 @@ snapshots:
   is-plain-object@5.0.0: {}
 
   is-potential-custom-element-name@1.0.1: {}
+
+  is-reference@1.2.1:
+    dependencies:
+      '@types/estree': 1.0.6
 
   is-ssh@1.4.0:
     dependencies:

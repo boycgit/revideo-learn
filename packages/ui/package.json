@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "@preact/signals": "^1.2.1",
-    "@revideo/core": "0.10.3",
+    "@revideo/core": "workspace:*",
     "@types/react": "^18",
     "preact": "^10.19.2"
   },

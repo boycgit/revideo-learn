@@ -1,6 +1,5 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
 export default [
@@ -10,6 +9,9 @@ export default [
       file: 'dist/index.js',
       format: 'es',
       sourcemap: true,
+      generatedCode: 'es2015',
+      minifyInternalExports: false,
+      compact: false,
     },
     plugins: [
       {
@@ -28,9 +30,10 @@ export default [
         tsconfig: './src/lib/tsconfig.json',
         compilerOptions: {
           composite: false,
+          removeComments: false,
+          pretty: true,
         },
       }),
-      terser(),
     ],
   },
 ];

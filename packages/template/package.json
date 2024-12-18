@@ -12,13 +12,13 @@
     "render": "tsc && node dist/render.js"
   },
   "dependencies": {
-    "@revideo/2d": "*",
-    "@revideo/core": "*",
-    "@revideo/ffmpeg": "*",
-    "@revideo/renderer": "*"
+    "@revideo/2d": "workspace:*",
+    "@revideo/core": "workspace:*",
+    "@revideo/ffmpeg": "workspace:*",
+    "@revideo/renderer": "workspace:*"
   },
   "devDependencies": {
-    "@revideo/ui": "*",
-    "@revideo/vite-plugin": "*"
+    "@revideo/ui": "workspace:*",
+    "@revideo/vite-plugin": "workspace:*"
   }
 }

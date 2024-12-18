@@ -9,6 +9,11 @@ export default [
       format: 'es',
       sourcemap: true,
       dir: './editor',
+      generatedCode: 'es2015',
+      minifyInternalExports: false,
+      compact: false,
+      manualChunks: undefined,
+      preserveModules: true,
     },
     external: [/^@revideo/, /^@?preact/, './index.css'],
     plugins: [
@@ -22,6 +27,8 @@ export default [
         compilerOptions: {
           outDir: './editor',
           composite: false,
+          removeComments: false,
+          pretty: true,
         },
       }),
     ],

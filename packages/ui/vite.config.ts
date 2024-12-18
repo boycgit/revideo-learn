@@ -21,6 +21,8 @@ export default defineConfig({
     rollupOptions: {
       external: [/^@revideo\/core/, /^@?preact/],
     },
+    minify: false,
+    sourcemap: true,
   },
   plugins: [
     preact(),

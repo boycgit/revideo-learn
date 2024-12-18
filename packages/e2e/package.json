@@ -8,14 +8,14 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@revideo/2d": "*",
-    "@revideo/core": "*",
-    "@revideo/ffmpeg": "*",
+    "@revideo/2d": "workspace:*",
+    "@revideo/core": "workspace:*",
+    "@revideo/ffmpeg": "workspace:*",
     "jest-image-snapshot": "^6.2.0",
     "puppeteer": "^23.4.0"
   },
   "devDependencies": {
-    "@revideo/ui": "*",
-    "@revideo/vite-plugin": "*"
+    "@revideo/ui": "workspace:*",
+    "@revideo/vite-plugin": "workspace:*"
   }
 }
