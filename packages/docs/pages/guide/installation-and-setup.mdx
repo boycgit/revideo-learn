@@ -1,0 +1,261 @@
+---
+sidebar_position: 1
+slug: /installation-and-setup
+---
+
+# 快速入门
+
+让我们通过一个示例项目来安装 revideo。要使用 revideo，请确保你已安装 [Node.js](https://nodejs.org/) 16 或更高版本。
+
+> 如果你使用 Linux，还需要安装 nscd：
+`sudo apt-get install nscd`。这个包是用于 [ffmpeg](https://docs.re.video/common-issues/ffmpeg) 的。
+
+
+## 创建新项目
+
+运行以下命令创建一个新的 revideo 项目（如果失败，请查看[故障排除](#troubleshooting)部分）：
+
+```bash
+npm init @revideo@latest
+```
+
+现在，选择**默认项目**，进入项目文件夹并安装所有依赖：
+
+```shell
+cd <project-path>
+npm install
+```
+
+要在编辑器中预览你的视频，运行：
+
+```shell
+npm start
+```
+
+现在可以通过访问 [http://localhost:9000/](http://localhost:9000/) 来访问编辑器。你应该能看到下面展示的视频。
+
+<video width="708" height="400" controls>
+  <source
+    src="https://revideo-example-assets.s3.amazonaws.com/revideo-example.mp4"
+    type="video/mp4"
+  />
+  你的浏览器不支持视频标签。
+</video>
+
+```tsx
+import {Audio, Img, Video, makeScene2D} from '@revideo/2d';
+import {all, chain, createRef, waitFor} from '@revideo/core';
+
+export default makeScene2D(function* (view) {
+  const logoRef = createRef<Img>();
+
+  yield view.add(
+    <>
+      <Video
+        src={'https://revideo-example-assets.s3.amazonaws.com/stars.mp4'}
+        play={true}
+        size={['100%', '100%']}
+      />
+      <Audio
+        src={'https://revideo-example-assets.s3.amazonaws.com/chill-beat.mp3'}
+        play={true}
+        time={17.0}
+      />
+    </>,
+  );
+
+  yield* waitFor(1);
+
+  view.add(
+    <Img
+      width={'1%'}
+      ref={logoRef}
+      src={
+        'https://revideo-example-assets.s3.amazonaws.com/revideo-logo-white.png'
+      }
+    />,
+  );
+
+  yield* chain(
+    all(logoRef().scale(40, 2), logoRef().rotation(360, 2)),
+    logoRef().scale(60, 1),
+  );
+});
+```
+
+## 渲染视频
+
+你可以通过运行以下命令来渲染视频：
+
+```
+npm run render
+```
+
+这将调用代码中的 `./src/render.ts` 脚本：
+
+```ts
+import {renderVideo} from '@revideo/renderer';
+
+async function render() {
+  console.log('Rendering video...');
+
+  // 这是渲染视频的主要函数
+  const file = await renderVideo({
+    projectFile: './src/project.ts',
+    settings: {logProgress: true},
+  });
+
+  console.log(`Rendered video to ${file}`);
+}
+
+render();
+```
+
+更多信息请查看 [renderVideo()](https://docs.re.video/api/renderer/renderVideo) API 参考文档。
+
+另外，你也可以使用运行 `npm run start` 时启动的编辑器中的按钮来渲染视频。
+
+### 从浏览器渲染
+
+要从编辑器渲染视频，只需点击"Render"按钮：
+
+![渲染按钮](https://revideo-example-assets.s3.amazonaws.com/render-button.png)
+
+## 理解视频代码
+
+目前，我们可以忽略 revideo 项目中除 `src/scenes/example.tsx` 以外的所有文件，因为这个文件定义了视频的视觉和音频内容。让我们来解释代码中可能让你困惑的部分。
+
+### 定义生成器函数
+
+我们的动画是在传递给 `makeScene2D` 的生成器函数中定义的 - 这个函数描述了视频中发生的事件序列：
+
+```tsx
+import {Audio, Img, Video, makeScene2D} from '@revideo/2d';
+import {all, chain, createRef, waitFor} from '@revideo/core';
+
+export default makeScene2D(function* (view) {
+// 你的动画流程在这里
+}
+```
+
+生成器函数可以返回多个值 - 当它们被调用时，会执行到第一个遇到的 `yield` 语句，并返回 yield 的值。Revideo 通过不断调用生成器函数来渲染动画，这个函数会生成我们可以导出的帧。你不需要完全理解这是如何工作的，但如果你感兴趣，可以阅读关于 revideo 中的[动画流程](https://docs.re.video/flow)。
+
+### 添加视频和音频元素
+
+在生成器函数的开始，我们向 `view` 添加了 [Video](https://docs.re.video/api/2d/components/Video) 和 [Audio](https://docs.re.video/api/2d/components/Audio) 标签，这些标签会在画布上显示。其他可以添加的组件包括 [Txt](https://docs.re.video/api/2d/components/Txt) 或 [Img](https://docs.re.video/api/2d/components/Img) 标签，或基本形状如 [Rect](api/2d/components/Rect) 或 [Circle](api/2d/components/Circle)。你可以在[这里](api/2d/components)找到所有组件的 API。
+
+```tsx
+yield view.add(
+  <>
+    <Video
+      src={'https://revideo-example-assets.s3.amazonaws.com/stars.mp4'}
+      play={true}
+      size={['100%', '100%']}
+    />
+    <Audio
+      src={'https://revideo-example-assets.s3.amazonaws.com/chill-beat.mp3'}
+      play={true}
+      time={17.0}
+    />
+  </>,
+);
+```
+
+关于输入参数的几点说明：
+
+- 在两种情况下，`src` 都指向文件，这里指向存储桶上的远程 URL。另外，你也可以通过传递本地文件路径来使用本地文件。
+- 传递 `size={["100%", "100%"]}` 使视频延伸到画布的完整宽度和高度。
+- 添加 `play={true}` 使两个媒体元素立即播放，而不是处于暂停状态。
+
+### 播放媒体一秒钟
+
+在添��背景视频和音频后，我们执行：
+
+```tsx
+yield * waitFor(1);
+```
+
+函数 [waitFor](https://docs.re.video/api/core/flow/#waitFor) 正如其名 - 什么都不做。当等待媒体（如视频和音频）播放或当我们想要显示静止图像时，它特别有用。
+
+### 制作 revideo logo 动画
+
+最后，我们让 revideo logo 旋转进入视频：
+
+```tsx
+view.add(
+  <Img
+    width={'1%'}
+    ref={logoRef}
+    src={
+      'https://revideo-example-assets.s3.amazonaws.com/revideo-logo-white.png'
+    }
+  />,
+);
+
+yield* chain(
+  all(logoRef().scale(40, 2), logoRef().rotation(360, 2)),
+  logoRef().scale(60, 1),
+);
+```
+
+这里发生了几件事：首先，我们将 revideo logo 作为 [Img](https://docs.re.video/api/2d/components/Img) 添加到画布上。我们将其初始宽度设置为屏幕的 1%，因为我们希望它随着视频播放而增长。我们还通过 `ref={logoRef}` 传递了一个[引用](https://docs.re.video/references)，这是我们之前初始化的。像 [React refs](https://react.dev/learn/referencing-values-with-refs) 一样，引用允许我们在元素初始化后访问和修改它们的行为。
+
+在代码中，我们使用对 revideo logo 的引用来制作动画。具体来说，我们运行以下命令：
+
+- `scale(x, s)`：在 `s` 秒内将 logo 的大小缩放到原始大小的 `x` 倍。
+- `rotation(d, s)`：在 `s` 秒内将图像旋转 `d` 度
+
+这些动画的流程由关键字 [chain](https://docs.re.video/flow/#chain) 和 [all](https://docs.re.video/flow/#all) 决定。前者指示 revideo 依次播放输入动画，而后者指示 revideo 同时播放它们。因此，我们首先看到 revideo logo 旋转 360 度，同时增长到原始大小的 40 倍。完成后，logo 继续增长到原始大小的 60 倍。你可以在[这里](https://docs.re.video/flow)了解更多关于 revideo 中的动画流程。
+
+## 故障排除
+
+### `npm init @revideo@latest` 执行失败
+
+npm 中有一个[bug](https://github.com/npm/cli/issues/5175)导致上述命令失败。这个问题在版本 `8.15.1` 中得到修复。你可以按照[这个指南](https://docs.npmjs.com/try-the-latest-stable-version-of-npm)更新你的 npm。或者，你可以使用以下命令代替：
+
+```bash
+npm exec @revideo/create@latest
+```
+
+### `npm install` 失败并显示 `code ENOENT`
+
+如果 `npm install` 失败并显示以下错误：
+
+```bash
+npm ERR! code ENOENT
+npm ERR! syscall open
+npm ERR! path [path]\package.json
+npm ERR! errno -4058
+npm ERR! enoent ENOENT: no such file or directory, open '[path]\package.json'
+npm ERR! enoent This is related to npm not being able to find a file.
+npm ERR! enoent
+```
+
+请确保你在正确的目录中执行命令。当你完成使用 `npm init` 引导项目时，它会显示三个命令：
+
+```bash
+cd [path]
+npm install
+npm start
+```
+
+你是否运行了 `cd` 命令切换到包含项目的目录？
+
+### 摄像机移动太远找不到预览（预览是黑的）
+
+你可以按 `0` 键让摄像机重新聚焦到预览上。
+
+### 动画突然结束或没有从开头开始
+
+确保时间轴中的播放范围选择器在你期望的位置开始和结束，例如在动画的开头和结尾。范围选择器是时间轴时间轴上的一个灰色条。当你将鼠标移到上面时，会出现六个点，允许你操作它。
+
+### 在 Windows Subsystem for Linux (WSL) 2 上文件监视不工作
+
+当在 WSL2 上运行 Vite 时，如果文件被 Windows 应用程序编辑，文件系统监视将不起作用。
+
+要解决这个问题，请将项目文件夹移动到 WSL2 文件系统中，并使用 WSL2 应用程序编辑文件。从 WSL2 访问 Windows 文件系统速度很慢，所以这样做会提高性能。
+
+更多信息请查看 [**Vite 文档**](https://vitejs.dev/config/server-options.html#server-watch)。
+
+[generators]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
+[all]: https://docs.re.video/api/core/flow#all
