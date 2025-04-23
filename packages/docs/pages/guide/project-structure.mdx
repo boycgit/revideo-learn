@@ -1,13 +1,6 @@
----
-sidebar_position: 2
-slug: /project-structure
----
+# 项目结构
 
-# Project Structure
-
-Revideo projects are structured similar to most Typescript projects. Here is the
-structure of the default project that gets initialized when you run
-`npm init @revideo@latest`:
+Revideo 项目的结构与大多数 TypeScript 项目类似。以下是当你运行 `npm init @revideo@latest` 时初始化的默认项目结构：
 
 ```
 my-project/
@@ -25,15 +18,11 @@ my-project/
     └── my-video.mp4
 ```
 
-Let's walk through the most relevant files:
+让我们来了解最重要的文件：
 
 ### `./src/scenes/example.tsx`
 
-Files inside the `./src/scenes` folder such as `example.tsx` are the ones you'll
-modify the most in order to define video templates. Scenes describe how your
-video should look like. They need to specify a default export that calls
-`makeScene2D` on a generator function describing what the desired video should
-look like:
+`./src/scenes` 文件夹中的文件（如 `example.tsx`）是你需要最频繁修改的文件，用于定义视频模板。场景描述了你的视频应该呈现的样子。这些文件需要导出一个默认函数，该函数通过调用 `makeScene2D` 来生成一个描述所需视频效果的生成器函数：
 
 ```tsx
 import {Video, makeScene2D} from '@revideo/2d';
@@ -53,11 +42,10 @@ export default makeScene2D(function* (view) {
 
 ### `./src/project.ts`
 
-Your project file does two things:
+你的项目文件有两个作用：
 
-1. It defines an array of scenes to create a full video
-2. It accepts video variables that will be passed to your video when you look at
-   it in the visual editor (when you run `npm start`)
+1. 定义场景数组以创建完整视频
+2. 接受视频变量，这些变量会在你使用可视化编辑器（运行 `npm start` 时）查看视频时传递给你的视频
 
 ```tsx
 import {makeProject} from '@revideo/core';
@@ -73,24 +61,13 @@ export default makeProject({
 });
 ```
 
-When specifying multiple scenes, the scenes will be played after another. You
-can also add [transitions](/transitions) between them. A new scene will not
-inherit any nodes from an old scene. This can have a positive influence on
-performance, especially when your scene is very bloated (as it contains a lot of
-nodes). In this case, recalculating the scene (for instance when navigating to a
-new time in the player) can be an expensive operation and is faster when you
-have multiple smaller scenes instead.
+当指定多个场景时，这些场景会依次播放。你也可以在它们之间添加[过渡效果](https://docs.re.video/transitions)。新场景不会继承旧场景的任何节点。这对性能有积极影响，特别是当你的场景非常庞大（包含大量节点）时。在这种情况下，重新计算场景（例如在播放器中导航到新的时间点）可能是一个耗时的操作，使用多个较小的场景会更快。
 
-However, in most cases, it is not necessary to use multiple scenes. For logical
-seperation, you can instead define generator function outside of your main
-generator function in `makeScene2D` and call them there.
+然而，在大多数情况下，使用多个场景并非必要。为了逻辑分离，你可以在 `makeScene2D` 的主生成器函数外定义生成器函数，并在其中调用它们。
 
 ### `vite.config.ts`
 
-Revideo projects are served using [vite](https://vitejs.dev/). The
-`vite.config.ts` file specifically configures the server used to serve the
-visual editor you see when running `npm start` inside your project. The default
-config looks as follows:
+Revideo 项目使用 [vite](https://vitejs.dev/) 进行服务。`vite.config.ts` 文件专门配置用于在运行 `npm start` 时提供可视化编辑器的服务器。默认配置如下：
 
 ```ts
 import {defineConfig} from 'vite';
@@ -101,16 +78,9 @@ export default defineConfig({
 });
 ```
 
-As you can see, the default settings are sufficient, and the only thing we
-modify is using the 'motionCanvas' plugin. This plugin enables Motion Canvas /
-Revideo-related functionality, such as communication between the browser in
-which the HTML canvas is rendered and drawn to, and a "backend" process running
-ffmpeg for audio processing.
+如你所见，默认设置已经足够，我们只需修改使用 'motionCanvas' 插件。这个插件启用 Motion Canvas / Revideo 相关功能，比如浏览器（用于渲染和绘制 HTML canvas）与运行 ffmpeg 进行音频处理的"后端"进程之间的通信。
 
-You can modify some settings of the motion canvas plugin, for instance to point
-to another project file than the default `project.ts`, or to select another
-output folder than the default `./output`. You can also modify some vite server
-settings here, for instance on which port your application is served:
+你可以修改 motion canvas 插件的一些设置，例如指定默认 `project.ts` 以外的项目文件，或选择默认 `./output` 以外的输出文件夹。你也可以在这里修改一些 vite 服务器设置，比如应用程序的服务端口：
 
 ```ts
 import {defineConfig} from 'vite';
@@ -131,39 +101,32 @@ export default defineConfig({
 
 ### `./src/render.ts`
 
-This file contains code to render your video. By default, you can execute its
-code by running `npm run render` (assuming that you bootstrapped your project
-using `npm init @revideo@latest`). Note that the
-[`renderVideo()`](/api/renderer/renderVideo) function accepts variables of its
-own and does not use the ones from `./src/project.ts`.
+这个文件包含渲染视频的代码。默认情况下，你可以通过运行 `npm run render` 来执行其代码（假设你使用 `npm init @revideo@latest` 引导项目）。注意，[`renderVideo()`](https://docs.re.video/api/renderer/renderVideo) 函数接受自己的变量，而不使用 `./src/project.ts` 中的变量。
 
 ```tsx
 import {renderVideo} from '@revideo/renderer';
 
 async function render() {
-	console.log('Rendering video...');
+    console.log('Rendering video...');
 
-	// This is the main function that renders the video
-	const file = await renderVideo({
-		projectFile: './src/project.ts',
+    // 这是渲染视频的主要函数
+    const file = await renderVideo({
+        projectFile: './src/project.ts',
         variables: { video: "" }
-		settings: { logProgress: true }
-	});
+        settings: { logProgress: true }
+    });
 
-	console.log(`Rendered video to ${file}`);
+    console.log(`Rendered video to ${file}`);
 }
 
 render();
 ```
 
-This code is not neccessary to start the editor or your project and is not tied
-to any other rendering functionality (like the renderer of the development
-server from `npx revideo serve`). You can safely remove it if you don't need it.
+这段代码对于启动编辑器或项目并非必需，也不与任何其他渲染功能（如来自 `npx revideo serve` 的开发服务器渲染器）相关联。如果你不需要它，可以安全地删除它。
 
-### Files in `/public`
+### `/public` 中的文件
 
-If you want to work with local files, you can put them into the `/public`
-folder. You can then access them inside your scene via their name:
+如果你想使用本地文件，可以将它们放在 `/public` 文件夹中。然后你可以在场景中通过它们的名称访问它们：
 
 ```tsx
 import {Video, makeScene2D} from '@revideo/2d';

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@revideo/renderer": "workspace:*",
+    "@revideo/ui": "workspace:*",
     "@revideo/telemetry": "workspace:*",
     "@revideo/vite-plugin": "workspace:*",
     "axios": "^1.7.9",

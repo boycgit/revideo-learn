@@ -47,7 +47,7 @@ program
   .option('--port <number>', 'Port on which to start the server', '9000')
   .action(async options => {
     const editor = await launchEditor(options.projectFile, options.port);
-    console.log(`Editor running on port ${editor.config.server.port}`);
+    console.log(`local Editor running on port ${editor.config.server.port}`);
   });
 
 program.parse(process.argv);

@@ -126,6 +126,9 @@ importers:
       '@revideo/telemetry':
         specifier: workspace:*
         version: link:../telemetry
+      '@revideo/ui':
+        specifier: workspace:*
+        version: link:../ui
       '@revideo/vite-plugin':
         specifier: workspace:*
         version: link:../vite-plugin
