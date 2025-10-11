@@ -98,12 +98,23 @@ export async function getVideoDuration(filePath: string): Promise<number> {
         reject(err);
         return;
       }
-      const duration = metadata.format.duration;
-      if (duration) {
-        resolve(duration);
-      } else {
-        reject(new Error('Could not determine video duration.'));
+      const candidates: Array<number | string | undefined> = [
+        metadata.format.duration,
+        ...metadata.streams
+          .map(stream => stream.duration)
+          .filter(duration => duration !== undefined),
+      ];
+
+      for (const candidate of candidates) {
+        const parsed =
+          typeof candidate === 'string' ? Number.parseFloat(candidate) : candidate;
+        if (typeof parsed === 'number' && Number.isFinite(parsed)) {
+          resolve(parsed);
+          return;
+        }
       }
+
+      reject(new Error('Could not determine video duration.'));
     });
   });
 }

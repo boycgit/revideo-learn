@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@revideo/ui": "workspace:*",
-    "@revideo/vite-plugin": "workspace:*"
+    "@revideo/vite-plugin": "workspace:*",
+    "preact": "^10.25.2"
   }
 }

@@ -469,6 +469,9 @@ importers:
       '@revideo/vite-plugin':
         specifier: workspace:*
         version: link:../vite-plugin
+      preact:
+        specifier: ^10.25.2
+        version: 10.25.2
 
   packages/ui:
     dependencies:
@@ -512,6 +515,9 @@ importers:
       '@revideo/ffmpeg':
         specifier: workspace:*
         version: link:../ffmpeg
+      '@revideo/ui':
+        specifier: workspace:*
+        version: link:../ui
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.2
@@ -524,6 +530,9 @@ importers:
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
+      mp4-wasm:
+        specifier: ^1.0.6
+        version: 1.0.6
       source-map:
         specifier: ^0.6.1
         version: 0.6.1

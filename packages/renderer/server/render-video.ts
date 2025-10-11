@@ -89,8 +89,10 @@ async function initBrowserAndServer(
   settings: RenderSettings,
   variables?: Record<string, unknown>,
 ) {
-  const args = settings.puppeteer?.args ?? [];
-  args.includes('--single-process') || args.push('--single-process');
+  const args = [...(settings.puppeteer?.args ?? [])];
+  if (process.platform !== 'win32' && !args.includes('--single-process')) {
+    args.push('--single-process');
+  }
 
   const resolvedProjectPath = path.join(process.cwd(), projectFile);
   const [browser, server] = await Promise.all([

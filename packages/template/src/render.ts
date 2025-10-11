@@ -10,7 +10,10 @@ async function render() {
       logProgress: true,
       projectSettings: {
         exporter: {
-          name: '@revideo/core/wasm',
+          name: '@revideo/core/ffmpeg',
+          options: {
+            format: 'mp4',
+          },
         },
       },
     },
