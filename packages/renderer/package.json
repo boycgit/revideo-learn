@@ -1,6 +1,6 @@
 {
   "name": "@revideo/renderer",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "description": "A headless renderer for revideo",
   "main": "lib/server/index.js",
   "author": "revideo",

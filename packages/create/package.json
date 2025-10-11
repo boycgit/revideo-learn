@@ -1,6 +1,6 @@
 {
   "name": "@revideo/create",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "description": "Quickly scaffold revideo projects",
   "main": "index.js",
   "author": "revideo",
