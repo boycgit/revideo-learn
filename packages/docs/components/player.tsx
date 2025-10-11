@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useState} from "react";
-import {project} from "./scene";
+import type {ReactNode} from "react";
 import {Player} from "@revideo/player-react";
+import {project} from "./scene";
 // import {transform} from "next/dist/build/swc";
 // import motionCanvas from "@revideo/vite-plugin";
 // import {build} from "vite";
@@ -9,11 +9,14 @@ interface DocsPlayerProps {
 	preProps: {
 		[key: string]: any;
 	};
-	preChildren: React.ReactNode;
+	preChildren: ReactNode;
 	code: string;
 }
 
 export function DocsPlayer({preProps, preChildren, code}: DocsPlayerProps) {
+	void preProps;
+	void preChildren;
+	void code;
 	// const [project, setProject] = useState(null);
 
 	// console.log({preProps, preChildren, code});

@@ -19,7 +19,12 @@ import * as os from 'os';
 import * as path from 'path';
 import type {Browser, PuppeteerLaunchOptions} from 'puppeteer';
 import puppeteer from 'puppeteer';
-import type {InlineConfig, ServerOptions, ViteDevServer} from 'vite';
+import type {
+  InlineConfig,
+  PluginOption,
+  ServerOptions,
+  ViteDevServer,
+} from 'vite';
 import {createServer} from 'vite';
 import {rendererPlugin} from './renderer-plugin';
 import {getParamDefaultsAndCheckValidity} from './validate-settings';
@@ -100,7 +105,7 @@ async function initBrowserAndServer(
           settings.ffmpeg,
           projectFile,
         ),
-      ],
+      ] as PluginOption[],
       ...settings.viteConfig,
       server: {
         port: fixedPort,

@@ -46,10 +46,10 @@ export function wasmExporterPlugin(): Plugin {
               const outputPath = path.join(os.tmpdir(), tempDir, 'visuals.mp4');
               const writeStream = fs.createWriteStream(outputPath);
 
-              await new Promise((resolve, reject) => {
+              await new Promise<void>((resolve, reject) => {
                 fs.createReadStream(file.filepath)
                   .pipe(writeStream)
-                  .on('finish', resolve)
+                  .on('finish', () => resolve())
                   .on('error', reject);
               });
 

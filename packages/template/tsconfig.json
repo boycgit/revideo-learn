@@ -1,7 +1,6 @@
 {
   "extends": "@revideo/2d/tsconfig.project.json",
   "compilerOptions": {
-    "types": ["node"],
     "noEmit": false,
     "outDir": "dist",
     "module": "CommonJS",

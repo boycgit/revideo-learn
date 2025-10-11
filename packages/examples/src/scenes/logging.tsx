@@ -1,5 +1,6 @@
 import {Circle, makeScene2D} from '@revideo/2d';
 import {useLogger, waitFor} from '@revideo/core';
+import type {Logger} from '@revideo/core';
 
 export default makeScene2D('logging', function* (view) {
   const logger = useLogger();
@@ -22,9 +23,13 @@ export default makeScene2D('logging', function* (view) {
     stack: new Error('').stack,
   });
 
-  logger.profile('id');
+  const profileLogger = logger as Logger & {
+    profile?: Logger['profile'];
+  };
+
+  profileLogger.profile?.('id');
   yield* waitFor(2);
-  logger.profile('id', {
+  profileLogger.profile?.('id', {
     message: 'Id second call',
     object: {
       someProperty: 'some property value',

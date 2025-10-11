@@ -8,12 +8,9 @@ async function render() {
     variables: {fill: 'orange'},
     settings: {
       logProgress: true,
-      renderSettings: {
+      projectSettings: {
         exporter: {
           name: '@revideo/core/wasm',
-          options: {
-            format: 'mp4',
-          },
         },
       },
     },

@@ -22,25 +22,28 @@ export const StarCount = () => {
 	const [stars, setStars] = useState<number | null>(null);
 
 	useEffect(() => {
-		if (!stars)
-			fetch("https://api.github.com/repos/redotvideo/revideo")
-				.then((response) => response.json())
-				.then((data: unknown) => {
-					if (typeof data === "object" && data !== null && "stargazers_count" in data) {
-						const count = data.stargazers_count;
-						if (typeof count === "number") {
-							setStars(count);
-						}
-					}
-				})
-				.catch((error) => {
-					console.error("Error fetching GitHub stars:", error);
-				});
-	}, []);
+		if (stars !== null) {
+			return;
+		}
 
-	return stars ? (
+		fetch("https://api.github.com/repos/redotvideo/revideo")
+			.then((response) => response.json())
+			.then((data: unknown) => {
+				if (typeof data === "object" && data !== null && "stargazers_count" in data) {
+					const count = data.stargazers_count;
+					if (typeof count === "number") {
+						setStars(count);
+					}
+				}
+			})
+			.catch((error) => {
+				console.error("Error fetching GitHub stars:", error);
+			});
+	}, [stars]);
+
+	return stars !== null ? (
 		<span>
-			{(stars as number).toLocaleString("en-US", {
+			{stars.toLocaleString("en-US", {
 				compactDisplay: "short",
 				notation: "compact",
 			})}

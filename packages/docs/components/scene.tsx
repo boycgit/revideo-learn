@@ -1,4 +1,4 @@
-/** @jsxImportSource @revideo/2d/lib */
+/* @jsxImportSource @revideo/2d/lib */
 import {Rect, makeScene2D} from "@revideo/2d";
 import {makeProject, waitFor} from "@revideo/core";
 
