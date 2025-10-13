@@ -42,9 +42,22 @@ function EditorViewport() {
             value="Render"
             id="render"
             onClick={async () => {
+              const settings = getFullRenderingSettings(project);
+              const exporterOptions =
+                'options' in settings.exporter && settings.exporter.options
+                  ? settings.exporter.options
+                  : {};
               await renderer.render({
-                ...getFullRenderingSettings(project),
+                ...settings,
                 name: project.name,
+                exporter: {
+                  ...settings.exporter,
+                  name: '@revideo/core/ffmpeg',
+                  options: {
+                    ...exporterOptions,
+                    format: 'mp4',
+                  },
+                },
               });
               await openOutputPath();
             }}
