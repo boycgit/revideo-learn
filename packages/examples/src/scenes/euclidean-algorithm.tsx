@@ -1,4 +1,4 @@
-import { Rect, Txt, makeScene2D } from '@revideo/2d';
+import { Rect, Txt, makeScene2D, Line } from '@revideo/2d';
 import {
     createRef,
     waitFor,
@@ -59,6 +59,7 @@ interface VisualizationConfig {
     rectHeight: number;
     colorA: string;
     colorB: string;
+    colorC: string;
     colorGCD: string;
     stepDuration: number;
     transitionDuration: number;
@@ -73,6 +74,7 @@ const DEFAULT_CONFIG: VisualizationConfig = {
     rectHeight: 80,
     colorA: '#e13238',
     colorB: '#4a90e2',
+    colorC: '#ff9800',
     colorGCD: '#4caf50',
     stepDuration: 1.5,
     transitionDuration: 0.8,
@@ -80,6 +82,9 @@ const DEFAULT_CONFIG: VisualizationConfig = {
 };
 
 export default makeScene2D('euclidean-algorithm', function* (view) {
+    // 设置背景颜色为暗灰色
+    view.fill('#2a2a2a');
+
     // 使用配置
     const config = DEFAULT_CONFIG;
     const initialA = config.initialA;
@@ -98,21 +103,27 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
     const labelB = createRef<Txt>();
     const expression = createRef<Txt>();
     const resultText = createRef<Txt>();
+    const subtitle = createRef<Txt>();
+    const divisionLine = createRef<Line>();
+    const quotientLabel = createRef<Txt>();
 
     // 初始化变量
     let a = initialA;
     let b = initialB;
 
+    // 定义底部基准线位置
+    const baselineY = 200;
+
     // 添加矩形和标签到场景
     view.add(
         <>
-            {/* 矩形 A */}
+            {/* 矩形 A - 竖向，底部对齐 */}
             <Rect
                 ref={rectA}
-                x={-300}
-                y={0}
-                width={a * scale}
-                height={config.rectHeight}
+                x={-200}
+                y={baselineY - (a * scale) / 2}
+                width={config.rectHeight}
+                height={a * scale}
                 fill={config.colorA}
                 stroke={'#ffffff'}
                 lineWidth={2}
@@ -121,21 +132,21 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
             {/* 标签 A */}
             <Txt
                 ref={labelA}
-                x={-300}
-                y={-config.rectHeight / 2 - 40}
+                x={-200 - config.rectHeight / 2 - 50}
+                y={baselineY - a * scale / 2}
                 text={a.toString()}
                 fontSize={32}
                 fill={'#ffffff'}
                 fontWeight={700}
                 opacity={0}
             />
-            {/* 矩形 B */}
+            {/* 矩形 B - 竖向，底部对齐 */}
             <Rect
                 ref={rectB}
-                x={100}
-                y={0}
-                width={b * scale}
-                height={config.rectHeight}
+                x={200}
+                y={baselineY - (b * scale) / 2}
+                width={config.rectHeight}
+                height={b * scale}
                 fill={config.colorB}
                 stroke={'#ffffff'}
                 lineWidth={2}
@@ -144,8 +155,8 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
             {/* 标签 B */}
             <Txt
                 ref={labelB}
-                x={100}
-                y={-config.rectHeight / 2 - 40}
+                x={200 + config.rectHeight / 2 + 50}
+                y={baselineY - b * scale / 2}
                 text={b.toString()}
                 fontSize={32}
                 fill={'#ffffff'}
@@ -156,7 +167,7 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
             <Txt
                 ref={expression}
                 x={0}
-                y={200}
+                y={350}
                 text={''}
                 fontSize={28}
                 fill={'#ffffff'}
@@ -167,10 +178,44 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
             <Txt
                 ref={resultText}
                 x={0}
-                y={-200}
+                y={-350}
                 text={''}
                 fontSize={36}
                 fill={config.colorGCD}
+                fontWeight={700}
+                opacity={0}
+            />
+            {/* 字幕说明 */}
+            <Txt
+                ref={subtitle}
+                x={0}
+                y={450}
+                text={''}
+                fontSize={36}
+                fill={'#ffffff'}
+                fontWeight={700}
+                opacity={0}
+            />
+            {/* 虚线 - 用于标记商的位置 */}
+            <Line
+                ref={divisionLine}
+                points={[
+                    [-400, 0],
+                    [400, 0],
+                ]}
+                stroke={'#ffff00'}
+                lineWidth={3}
+                lineDash={[10, 10]}
+                opacity={0}
+            />
+            {/* 商的标签 */}
+            <Txt
+                ref={quotientLabel}
+                x={-450}
+                y={0}
+                text={''}
+                fontSize={28}
+                fill={'#ffff00'}
                 fontWeight={700}
                 opacity={0}
             />
@@ -185,14 +230,26 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
         labelB().opacity(1, 1),
     );
 
+    // 显示初始说明
+    subtitle().text(`开始计算 ${initialA} 和 ${initialB} 的最大公约数`);
+    yield* subtitle().opacity(1, 0.5);
+
     // 暂停让用户观察初始状态
     yield* waitFor(config.pauseDuration);
 
+    // 淡出初始说明
+    yield* subtitle().opacity(0, 0.3);
+
     // 算法迭代循环
+    let step = 1;
     while (b !== 0) {
         // 计算商和余数
         const quotient = Math.floor(a / b);
         const remainder = a % b;
+
+        // 显示步骤说明
+        subtitle().text(`第 ${step} 步：用 ${a} 除以 ${b}`);
+        yield* subtitle().opacity(1, 0.3);
 
         // 显示数学表达式
         const expr = formatExpression(a, b, quotient, remainder);
@@ -200,27 +257,151 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
         yield* expression().opacity(1, 0.5);
 
         // 暂停显示表达式
+        yield* waitFor(config.stepDuration * 0.5);
+
+        // 显示商的可视化：在左侧矩形上叠加虚线，表示 b × quotient 的高度
+        const divisionHeight = b * quotient * scale;
+        const divisionY = baselineY - divisionHeight;
+
+        divisionLine().y(divisionY);
+        quotientLabel().text(`商 = ${quotient}`);
+        quotientLabel().y(divisionY);
+
+        // 显示虚线和商标签
+        yield* all(
+            divisionLine().opacity(0.8, 0.5),
+            quotientLabel().opacity(1, 0.5),
+        );
+
+        // 创建虚框矩形来表示商（在右侧矩形和虚线之间堆叠）
+        const stackedRects: Rect[] = [];
+        const bHeight = b * scale;
+
+        // 在右侧矩形上方堆叠 quotient - 1 个虚框矩形
+        for (let i = 1; i < quotient; i++) {
+            const stackRect = new Rect({
+                x: 200,
+                y: baselineY - bHeight / 2 - i * bHeight,
+                width: config.rectHeight,
+                height: bHeight,
+                fill: config.colorB,
+                stroke: config.colorB,
+                lineWidth: 2,
+                lineDash: [8, 8],
+                opacity: 0,
+            });
+            view.add(stackRect);
+            stackedRects.push(stackRect);
+        }
+
+        // 逐个显示堆叠的虚框矩形
+        for (const rect of stackedRects) {
+            yield* rect.opacity(0.5, 0.3);
+            yield* waitFor(0.2);
+        }
+
+        // 创建余数矩形和标签（在虚线上方，右侧矩形位置）
+        let remainderRect: Rect | null = null;
+        let remainderLabel: Txt | null = null;
+        if (remainder > 0) {
+            const remainderHeight = remainder * scale;
+            remainderRect = new Rect({
+                x: 200,
+                y: divisionY - remainderHeight / 2,
+                width: config.rectHeight,
+                height: remainderHeight,
+                fill: config.colorC,
+                stroke: config.colorC,
+                lineWidth: 2,
+                lineDash: [8, 8],
+                opacity: 0,
+            });
+            view.add(remainderRect);
+
+            // 创建余数标签
+            remainderLabel = new Txt({
+                x: 200 + config.rectHeight / 2 + 80,
+                y: divisionY - remainderHeight / 2,
+                text: `余数: ${remainder}`,
+                fontSize: 28,
+                fill: config.colorC,
+                fontWeight: 700,
+                opacity: 0,
+            });
+            view.add(remainderLabel);
+
+            yield* all(
+                remainderRect.opacity(0.5, 0.5),
+                remainderLabel.opacity(1, 0.5),
+            );
+        }
+
+        // 更新字幕说明商的含义
+        subtitle().text(`${b} 可以叠 ${quotient} 次，虚线上方是余数 ${remainder}`);
+
         yield* waitFor(config.stepDuration);
 
-        // 淡出表达式
-        yield* expression().opacity(0, 0.5);
+        // 淡出堆叠的虚框矩形、余数矩形和标签
+        const fadeOutAnims = stackedRects.map(rect => rect.opacity(0, 0.5));
+        if (remainderRect) {
+            fadeOutAnims.push(remainderRect.opacity(0, 0.5));
+        }
+        if (remainderLabel) {
+            fadeOutAnims.push(remainderLabel.opacity(0, 0.5));
+        }
+        yield* all(...fadeOutAnims);
+
+        // 移除堆叠的矩形和标签
+        stackedRects.forEach(rect => rect.remove());
+        if (remainderRect) {
+            remainderRect.remove();
+        }
+        if (remainderLabel) {
+            remainderLabel.remove();
+        }
 
         // 如果余数为 0，退出循环
         if (remainder === 0) {
+            // 显示完成说明
+            subtitle().text(`余数为 0，${b} 就是最大公约数`);
+            yield* all(
+                expression().opacity(0, 0.5),
+                divisionLine().opacity(0, 0.5),
+                quotientLabel().opacity(0, 0.5),
+            );
+            yield* waitFor(1);
             break;
         }
 
-        // 更新矩形尺寸和位置
+        // 淡出可视化元素
         yield* all(
-            rectA().width(b * scale, config.transitionDuration, easeInOutCubic),
-            rectB().width(remainder * scale, config.transitionDuration, easeInOutCubic),
+            expression().opacity(0, 0.5),
+            divisionLine().opacity(0, 0.5),
+            quotientLabel().opacity(0, 0.5),
+        );
+
+        // 显示更新说明
+        subtitle().text(`余数是 ${remainder}，继续用 ${b} 和 ${remainder} 计算`);
+
+        // 更新矩形尺寸和位置（竖向，保持底部对齐）
+        yield* all(
+            rectA().height(b * scale, config.transitionDuration, easeInOutCubic),
+            rectA().y(baselineY - (b * scale) / 2, config.transitionDuration, easeInOutCubic),
+            rectB().height(remainder * scale, config.transitionDuration, easeInOutCubic),
+            rectB().y(baselineY - (remainder * scale) / 2, config.transitionDuration, easeInOutCubic),
             labelA().text(b.toString(), config.transitionDuration),
+            labelA().y(baselineY - b * scale / 2, config.transitionDuration, easeInOutCubic),
             labelB().text(remainder.toString(), config.transitionDuration),
+            labelB().y(baselineY - remainder * scale / 2, config.transitionDuration, easeInOutCubic),
         );
 
         // 更新变量
         a = b;
         b = remainder;
+        step++;
+
+        // 淡出字幕
+        yield* subtitle().opacity(0, 0.3);
 
         // 暂停
         yield* waitFor(config.pauseDuration);
@@ -231,6 +412,7 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
         rectA().fill(config.colorGCD, config.transitionDuration, easeInOutCubic),
         rectB().opacity(0, config.transitionDuration),
         labelB().opacity(0, config.transitionDuration),
+        subtitle().opacity(0, config.transitionDuration),
     );
 
     // 显示结果文本
