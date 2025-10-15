@@ -235,8 +235,6 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
 
     yield* waitFor(config.pauseDuration);
 
-    console.log(1232, rectA(), rectB())
-
     // 初始淡入动画
     yield* all(
         rectA().opacity(1, 1),
