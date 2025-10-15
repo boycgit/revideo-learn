@@ -26,6 +26,7 @@ export default defineConfig({
         './src/tweening-save-restore.ts',
         './src/presentation.ts',
         './src/euclidean-algorithm.ts',
+        './src/quick-sort.ts',
       ],
     }),
   ],
