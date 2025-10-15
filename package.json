@@ -22,6 +22,8 @@
     "template:render": "pnpm --filter @revideo/template run render",
     "examples:dev": "pnpm --filter @revideo/examples run dev",
     "examples:build": "pnpm --filter @revideo/examples run build",
+    "interactive": "pnpm --filter @revideo/examples run interactive",
+    "interactive:build": "pnpm --filter @revideo/examples run build:interactive",
     "renderer:build": "pnpm --filter @revideo/renderer run build",
     "player:dev": "pnpm --filter @revideo/player run dev",
     "player:build": "pnpm --filter @revideo/player run build",

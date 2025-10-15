@@ -4,17 +4,25 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --base /examples/"
+    "build": "tsc && vite build --base /examples/",
+    "interactive": "vite --config vite.react.config.ts",
+    "build:interactive": "vite build --config vite.react.config.ts"
   },
   "dependencies": {
     "@revideo/2d": "workspace:*",
     "@revideo/core": "workspace:*",
     "@revideo/ffmpeg": "workspace:*",
+    "@revideo/player-react": "workspace:*",
     "preact": "^10.19.2",
-    "@preact/signals": "^1.2.1"
+    "@preact/signals": "^1.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@revideo/ui": "workspace:*",
-    "@revideo/vite-plugin": "workspace:*"
+    "@revideo/vite-plugin": "workspace:*",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
   }
 }

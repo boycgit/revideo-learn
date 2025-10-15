@@ -5,6 +5,7 @@ import {
     all,
     easeInOutCubic,
     easeOutBack,
+    useScene,
 } from '@revideo/core';
 
 // 根据输入数字计算合适的缩放比例
@@ -66,10 +67,18 @@ interface VisualizationConfig {
     pauseDuration: number;
 }
 
-// 默认配置
+// ============================================
+// 配置区域 - 在这里修改初始值
+// ============================================
+// 修改 initialA 和 initialB 的值来演示不同的数字
+// 例如：
+//   - 48 和 18 -> 最大公约数是 6
+//   - 100 和 35 -> 最大公约数是 5
+//   - 56 和 42 -> 最大公约数是 14
+// ============================================
 const DEFAULT_CONFIG: VisualizationConfig = {
-    initialA: 48,
-    initialB: 18,
+    initialA: 48,  // 👈 修改这里：第一个数字
+    initialB: 18,  // 👈 修改这里：第二个数字
     baseScale: 10,
     rectHeight: 80,
     colorA: '#e13238',
@@ -87,8 +96,10 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
 
     // 使用配置
     const config = DEFAULT_CONFIG;
-    const initialA = config.initialA;
-    const initialB = config.initialB;
+    
+    // 从项目变量中读取，如果没有则使用默认值
+    const initialA = useScene().variables.get('initialA', config.initialA)();
+    const initialB = useScene().variables.get('initialB', config.initialB)();
 
     // 验证输入
     validateInput(initialA, initialB);
