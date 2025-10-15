@@ -380,20 +380,77 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
             quotientLabel().opacity(0, 0.5),
         );
 
-        // 显示更新说明
-        subtitle().text(`余数是 ${remainder}，继续用 ${b} 和 ${remainder} 计算`);
+        // 显示辗转相除的说明
+        subtitle().text(`辗转相除：${b} 移到左边，余数 ${remainder} 移到右边`);
 
-        // 更新矩形尺寸和位置（竖向，保持底部对齐）
+        // 创建临时余数矩形，从虚线位置移动到右侧底部位置
+        const tempRemainderRect = new Rect({
+            x: 200,
+            y: divisionY - (remainder * scale) / 2,
+            width: config.rectHeight,
+            height: remainder * scale,
+            fill: config.colorC,
+            stroke: '#ffffff',
+            lineWidth: 2,
+            opacity: 0.5,
+        });
+        view.add(tempRemainderRect);
+
+        const tempRemainderLabel = new Txt({
+            x: 200 + config.rectHeight / 2 + 50,
+            y: divisionY - (remainder * scale) / 2,
+            text: remainder.toString(),
+            fontSize: 32,
+            fill: '#ffffff',
+            fontWeight: 700,
+            opacity: 1,
+        });
+        view.add(tempRemainderLabel);
+
+        // 同时执行：右侧矩形移到左侧，余数矩形移到右侧底部
         yield* all(
-            rectA().height(b * scale, config.transitionDuration, easeInOutCubic),
-            rectA().y(baselineY - (b * scale) / 2, config.transitionDuration, easeInOutCubic),
-            rectB().height(remainder * scale, config.transitionDuration, easeInOutCubic),
-            rectB().y(baselineY - (remainder * scale) / 2, config.transitionDuration, easeInOutCubic),
-            labelA().text(b.toString(), config.transitionDuration),
-            labelA().y(baselineY - b * scale / 2, config.transitionDuration, easeInOutCubic),
-            labelB().text(remainder.toString(), config.transitionDuration),
-            labelB().y(baselineY - remainder * scale / 2, config.transitionDuration, easeInOutCubic),
+            // 右侧矩形移到左侧
+            rectB().x(-200, config.transitionDuration, easeInOutCubic),
+            rectB().fill(config.colorA, config.transitionDuration, easeInOutCubic),
+            // 右侧标签移到左侧
+            labelB().x(-200 - config.rectHeight / 2 - 50, config.transitionDuration, easeInOutCubic),
+            // 左侧原矩形淡出
+            rectA().opacity(0, config.transitionDuration),
+            labelA().opacity(0, config.transitionDuration),
+            // 余数矩形移到右侧底部位置
+            tempRemainderRect.y(baselineY - (remainder * scale) / 2, config.transitionDuration, easeInOutCubic),
+            tempRemainderRect.fill(config.colorB, config.transitionDuration, easeInOutCubic),
+            tempRemainderRect.opacity(1, config.transitionDuration),
+            tempRemainderRect.lineDash([], config.transitionDuration),
+            // 余数标签移到右侧位置
+            tempRemainderLabel.y(baselineY - (remainder * scale) / 2, config.transitionDuration, easeInOutCubic),
         );
+
+        // 更新左侧矩形的属性以匹配新的 B 值
+        rectA().height(b * scale);
+        rectA().y(baselineY - (b * scale) / 2);
+        rectA().fill(config.colorA);
+        rectA().x(-200);
+        labelA().text(b.toString());
+        labelA().y(baselineY - b * scale / 2);
+        labelA().x(-200 - config.rectHeight / 2 - 50);
+
+        // 恢复左侧矩形的透明度
+        rectA().opacity(1);
+        labelA().opacity(1);
+
+        // 更新右侧矩形的属性
+        rectB().height(remainder * scale);
+        rectB().y(baselineY - (remainder * scale) / 2);
+        rectB().fill(config.colorB);
+        rectB().x(200);
+        labelB().text(remainder.toString());
+        labelB().y(baselineY - remainder * scale / 2);
+        labelB().x(200 + config.rectHeight / 2 + 50);
+
+        // 移除临时矩形
+        tempRemainderRect.remove();
+        tempRemainderLabel.remove();
 
         // 更新变量
         a = b;
