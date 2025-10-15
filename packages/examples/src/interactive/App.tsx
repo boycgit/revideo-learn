@@ -3,6 +3,8 @@ import { Player } from '@revideo/player-react';
 import type { Project } from '@revideo/core';
 import './App.css';
 
+import project from '../euclidean-algorithm'
+
 interface Example {
   title: string;
   a: number;
@@ -20,7 +22,7 @@ const EXAMPLES: Example[] = [
 export function App() {
   const [inputA, setInputA] = useState<number>(48);
   const [inputB, setInputB] = useState<number>(18);
-  const [project, setProject] = useState<Project | null>(null);
+  // const [project, setProject] = useState<Project | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -33,20 +35,20 @@ export function App() {
   const loadProject = async (a: number, b: number) => {
     try {
       // 动态导入场景
-      const sceneModule = await import('../scenes/euclidean-algorithm');
-      const scene = sceneModule.default;
+      // const sceneModule = await import('../scenes/euclidean-algorithm');
+      // const scene = sceneModule.default;
       
       // 使用 makeProject 创建新项目
-      const { makeProject } = await import('@revideo/core');
-      const newProject = makeProject({
-        scenes: [scene],
-        variables: {
-          initialA: a,
-          initialB: b,
-        },
-      });
+      // const { makeProject } = await import('@revideo/core');
+      // const newProject = makeProject({
+      //   scenes: [scene],
+      //   variables: {
+      //     initialA: a,
+      //     initialB: b,
+      //   },
+      // });
       
-      setProject(newProject);
+      // setProject(newProject);
       setCurrentTime(0);
       setIsPlaying(false);
     } catch (error) {

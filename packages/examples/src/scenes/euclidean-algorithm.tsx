@@ -87,7 +87,7 @@ const DEFAULT_CONFIG: VisualizationConfig = {
     colorGCD: '#4caf50',
     stepDuration: 1.5,
     transitionDuration: 0.8,
-    pauseDuration: 0.5,
+    pauseDuration: 1,
 };
 
 export default makeScene2D('euclidean-algorithm', function* (view) {
@@ -126,7 +126,7 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
     const baselineY = 200;
 
     // 添加矩形和标签到场景
-    view.add(
+    yield view.add(
         <>
             {/* 矩形 A - 竖向，底部对齐 */}
             <Rect
@@ -232,6 +232,10 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
             />
         </>,
     );
+
+    yield* waitFor(config.pauseDuration);
+
+    console.log(1232, rectA(), rectB())
 
     // 初始淡入动画
     yield* all(
@@ -374,7 +378,7 @@ export default makeScene2D('euclidean-algorithm', function* (view) {
         // 如果余数为 0，退出循环
         if (remainder === 0) {
             // 显示完成说明
-            subtitle().text(`余数为 0，${b} 就是最大公约数`);
+            subtitle().text(`余数为 0，这样 ${a} 就是最大公约数`);
             yield* all(
                 expression().opacity(0, 0.5),
                 divisionLine().opacity(0, 0.5),

@@ -3,7 +3,9 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+  ],
   root: resolve(__dirname, 'src/interactive'),
   server: {
     port: 3002,
