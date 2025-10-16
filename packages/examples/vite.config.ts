@@ -1,8 +1,32 @@
+import preact from '@preact/preset-vite';
 import motionCanvas from '@revideo/vite-plugin';
 import {defineConfig} from 'vite';
 
 export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: '@revideo/ui',
+        replacement: '@revideo/ui/src/main.tsx',
+      },
+      {
+        find: '@revideo/2d/editor',
+        replacement: '@revideo/2d/src/editor',
+      },
+      {
+        find: /@revideo\/2d(\/lib)?/,
+        replacement: '@revideo/2d/src/lib',
+      },
+      {find: '@revideo/core', replacement: '@revideo/core/src'},
+    ],
+  },
   plugins: [
+    preact({
+      include: [
+        /packages\/ui\/src\/(.*)\.tsx?$/,
+        /packages\/2d\/src\/editor\/(.*)\.tsx?$/,
+      ],
+    }),
     motionCanvas({
       project: [
         './src/quickstart.ts',

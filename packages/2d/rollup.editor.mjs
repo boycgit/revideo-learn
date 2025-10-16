@@ -14,6 +14,7 @@ export default [
       compact: false,
       manualChunks: undefined,
       preserveModules: true,
+      preserveModulesRoot: 'src/editor',
     },
     external: [/^@revideo/, /^@?preact/, './index.css'],
     plugins: [
