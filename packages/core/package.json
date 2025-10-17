@@ -30,6 +30,8 @@
   },
   "devDependencies": {
     "@types/culori": "^2.1.1",
-    "jsdom": "^22.1.0"
+    "@vitest/coverage-v8": "0.34.6",
+    "jsdom": "^22.1.0",
+    "vitest-webgl-canvas-mock": "^1.1.0"
   }
 }

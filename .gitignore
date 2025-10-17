@@ -9,6 +9,8 @@ node_modules
 /packages/*/build
 /packages/*/output
 
+/packages/*/coverage
+
 .rollup.cache
 tsconfig.tsbuildinfo
 
